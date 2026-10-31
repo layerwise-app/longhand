@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drag to change the measure</title>
+<style>
+  :root { color-scheme: light dark; --ink:#1d1c1a; --muted:#68655e; --line:#e4e1d9; --accent:#2438a6; --bg:#fbfaf7 }
+  @media (prefers-color-scheme: dark) { :root { --ink:#ecebe6; --muted:#a09e97; --line:#303238; --accent:#a3b3ff; --bg:#1b1c20 } }
+  * { box-sizing: border-box }
+  body { margin:0; padding:18px; background:var(--bg); color:var(--ink); font:15px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif }
+  .controls { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; margin-bottom:16px }
+  label { display:block; color:var(--muted); font-size:13px }
+  label b { color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums }
+  input[type=range] { width:100%; accent-color:var(--accent); margin:6px 0 0; height:28px }
+  #frame { overflow:hidden; border-top:1px solid var(--line); padding-top:14px }
+  #text { margin:0; font-family:Georgia,'Times New Roman',serif; font-size:17px; width:100%; transition:max-width .08s linear }
+  #verdict { margin:12px 0 0; color:var(--muted); font-size:13px }
+</style>
+</head>
+<body>
+  <div class="controls">
+    <label>Measure <b id="mv"></b>
+      <input id="m" type="range" min="25" max="110" value="90" aria-label="Characters per line">
+    </label>
+    <label>Leading <b id="lv"></b>
+      <input id="l" type="range" min="100" max="200" step="5" value="115" aria-label="Line height">
+    </label>
+  </div>
+  <div id="frame">
+    <p id="text">The eye does most of its work at the end of a line, where it has to leap back and find the start of the next one. Give it a short trip and enough white space to land on, and it never asks you for help. Make the line long and tight, and the eye starts missing, rereading the same row or skipping a row entirely. You will not notice this happening. You will only notice that you are tired, and that the article you meant to finish has somehow become a thing you will read later.</p>
+  </div>
+  <p id="verdict" role="status"></p>
+<script>
+  var m = document.getElementById('m'), l = document.getElementById('l');
+  var text = document.getElementById('text'), verdict = document.getElementById('verdict');
+  function update() {
+    var chars = +m.value, lead = +l.value / 100;
+    text.style.maxWidth = chars + 'ch';
+    text.style.lineHeight = lead;
+    document.getElementById('mv').textContent = chars + ' characters';
+    document.getElementById('lv').textContent = lead.toFixed(2);
+    verdict.textContent =
+      chars < 40 ? 'Choppy. The eye keeps stopping before a thought can finish.' :
+      chars > 80 ? (lead < 1.4 ? 'Cramped. Long lines with tight leading lose the eye on the way back.' : 'Better, but the return trip is still long.') :
+      lead < 1.3 ? 'Good length, but the rows are crowding each other.' :
+      lead > 1.8 ? 'Comfortable length, though the lines have started to drift apart.' :
+      'That is the sweet spot. You should stop noticing the type now.';
+  }
+  m.oninput = l.oninput = update;
+  update();
+</script>
+</body>
+</html>

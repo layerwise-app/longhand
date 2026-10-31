@@ -3,13 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 import { authClient } from '~/lib/auth-client';
 import { Button } from '~/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '~/components/ui/card';
+import { AuthShell } from '~/components/site/auth-shell';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import {
@@ -53,34 +47,23 @@ function ForgotPasswordPage() {
 
   if (resetPassword.isSuccess) {
     return (
-      <div className='flex min-h-svh items-center justify-center p-4'>
-        <Card className='w-full max-w-sm'>
-          <CardHeader>
-            <CardTitle>Password reset</CardTitle>
-            <CardDescription>
-              Your password has been updated. You can now sign in.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button asChild className='w-full'>
-              <Link to='/sign-in'>Back to sign in</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+      <AuthShell
+        title='Password reset'
+        description='Your password has been updated. You can now sign in.'
+      >
+        <Button asChild size='lg' className='w-full rounded-full'>
+          <Link to='/sign-in'>Back to sign in</Link>
+        </Button>
+      </AuthShell>
     );
   }
 
   return (
-    <div className='flex min-h-svh items-center justify-center p-4'>
-      <Card className='w-full max-w-sm'>
-        <CardHeader>
-          <CardTitle>Reset your password</CardTitle>
-          <CardDescription>
-            We’ll send a six-digit reset code to your email.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className='flex flex-col gap-4'>
+    <AuthShell
+      title='Reset your password'
+      description='We’ll send a six-digit reset code to your email.'
+    >
+        <div className='flex flex-col gap-4'>
           <form
             className='flex flex-col gap-4'
             onSubmit={(event) => {
@@ -201,8 +184,7 @@ function ForgotPasswordPage() {
           <Button variant='link' asChild className='h-auto p-0'>
             <Link to='/sign-in'>Back to sign in</Link>
           </Button>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+    </AuthShell>
   );
 }

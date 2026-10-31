@@ -8,233 +8,666 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root';
-import { Route as IndexRouteImport } from './routes/index';
-import { Route as DashboardRouteImport } from './routes/dashboard';
-import { Route as ForgotPasswordRouteImport } from './routes/forgot-password';
-import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt';
-import { Route as SignInRouteImport } from './routes/sign-in';
-import { Route as SignUpRouteImport } from './routes/sign-up';
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml';
-import { Route as SignInOtpRouteImport } from './routes/sign-in_.otp';
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$';
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as SiteRouteImport } from './routes/_site'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SignUpRouteImport } from './routes/sign-up'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as TryRouteImport } from './routes/try'
+import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as SiteIndexRouteImport } from './routes/_site/index'
+import { Route as SiteAtChar123usernameChar125RouteImport } from './routes/_site/@{$username}'
+import { Route as SiteAboutRouteImport } from './routes/_site/about'
+import { Route as SiteDashboardRouteImport } from './routes/_site/dashboard'
+import { Route as SiteGuidelinesRouteImport } from './routes/_site/guidelines'
+import { Route as SitePrivacyRouteImport } from './routes/_site/privacy'
+import { Route as SiteSearchRouteImport } from './routes/_site/search'
+import { Route as ApiTrackRouteImport } from './routes/api/track'
+import { Route as MediaSplatRouteImport } from './routes/media.$'
+import { Route as SignInOtpRouteImport } from './routes/sign-in_.otp'
+import { Route as SiteDashboardIndexRouteImport } from './routes/_site/dashboard/index'
+import { Route as SiteDashboardLibraryRouteImport } from './routes/_site/dashboard/library'
+import { Route as SiteDashboardNotificationsRouteImport } from './routes/_site/dashboard/notifications'
+import { Route as SiteDashboardReportsRouteImport } from './routes/_site/dashboard/reports'
+import { Route as SiteDashboardSettingsRouteImport } from './routes/_site/dashboard/settings'
+import { Route as SiteDashboardStatsRouteImport } from './routes/_site/dashboard/stats'
+import { Route as SiteStorySlugRouteImport } from './routes/_site/story.$slug'
+import { Route as SiteTopicsIndexRouteImport } from './routes/_site/topics.index'
+import { Route as SiteTopicsSlugRouteImport } from './routes/_site/topics.$slug'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as DashboardWriteIdRouteImport } from './routes/dashboard_.write.$id'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport
-} as any);
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport
-} as any);
+const SiteRoute = SiteRouteImport.update({
+  id: '/_site',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignInRoute = SignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignUpRoute = SignUpRouteImport.update({
   id: '/sign-up',
   path: '/sign-up',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TryRoute = TryRouteImport.update({
+  id: '/try',
+  path: '/try',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SiteIndexRoute = SiteIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteAtChar123usernameChar125Route =
+  SiteAtChar123usernameChar125RouteImport.update({
+    id: '/@{$username}',
+    path: '/@{$username}',
+    getParentRoute: () => SiteRoute,
+  } as any)
+const SiteAboutRoute = SiteAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteDashboardRoute = SiteDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteGuidelinesRoute = SiteGuidelinesRouteImport.update({
+  id: '/guidelines',
+  path: '/guidelines',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SitePrivacyRoute = SitePrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteSearchRoute = SiteSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => SiteRoute,
+} as any)
+const ApiTrackRoute = ApiTrackRouteImport.update({
+  id: '/api/track',
+  path: '/api/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaSplatRoute = MediaSplatRouteImport.update({
+  id: '/media/$',
+  path: '/media/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignInOtpRoute = SignInOtpRouteImport.update({
   id: '/sign-in_/otp',
   path: '/sign-in/otp',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SiteDashboardIndexRoute = SiteDashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SiteDashboardRoute,
+} as any)
+const SiteDashboardLibraryRoute = SiteDashboardLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => SiteDashboardRoute,
+} as any)
+const SiteDashboardNotificationsRoute =
+  SiteDashboardNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => SiteDashboardRoute,
+  } as any)
+const SiteDashboardReportsRoute = SiteDashboardReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => SiteDashboardRoute,
+} as any)
+const SiteDashboardSettingsRoute = SiteDashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => SiteDashboardRoute,
+} as any)
+const SiteDashboardStatsRoute = SiteDashboardStatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => SiteDashboardRoute,
+} as any)
+const SiteStorySlugRoute = SiteStorySlugRouteImport.update({
+  id: '/story/$slug',
+  path: '/story/$slug',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteTopicsIndexRoute = SiteTopicsIndexRouteImport.update({
+  id: '/topics/',
+  path: '/topics/',
+  getParentRoute: () => SiteRoute,
+} as any)
+const SiteTopicsSlugRoute = SiteTopicsSlugRouteImport.update({
+  id: '/topics/$slug',
+  path: '/topics/$slug',
+  getParentRoute: () => SiteRoute,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardWriteIdRoute = DashboardWriteIdRouteImport.update({
+  id: '/dashboard_/write/$id',
+  path: '/dashboard/write/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute;
-  '/dashboard': typeof DashboardRoute;
-  '/forgot-password': typeof ForgotPasswordRoute;
-  '/robots.txt': typeof RobotsDottxtRoute;
-  '/sign-in': typeof SignInRoute;
-  '/sign-up': typeof SignUpRoute;
-  '/sitemap.xml': typeof SitemapDotxmlRoute;
-  '/sign-in/otp': typeof SignInOtpRoute;
-  '/api/auth/$': typeof ApiAuthSplatRoute;
+  '/': typeof SiteIndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/try': typeof TryRoute
+  '/welcome': typeof WelcomeRoute
+  '/@{$username}': typeof SiteAtChar123usernameChar125Route
+  '/about': typeof SiteAboutRoute
+  '/dashboard': typeof SiteDashboardRouteWithChildren
+  '/guidelines': typeof SiteGuidelinesRoute
+  '/privacy': typeof SitePrivacyRoute
+  '/search': typeof SiteSearchRoute
+  '/api/track': typeof ApiTrackRoute
+  '/media/$': typeof MediaSplatRoute
+  '/sign-in/otp': typeof SignInOtpRoute
+  '/dashboard/library': typeof SiteDashboardLibraryRoute
+  '/dashboard/notifications': typeof SiteDashboardNotificationsRoute
+  '/dashboard/reports': typeof SiteDashboardReportsRoute
+  '/dashboard/settings': typeof SiteDashboardSettingsRoute
+  '/dashboard/stats': typeof SiteDashboardStatsRoute
+  '/story/$slug': typeof SiteStorySlugRoute
+  '/topics/$slug': typeof SiteTopicsSlugRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/dashboard/write/$id': typeof DashboardWriteIdRoute
+  '/dashboard/': typeof SiteDashboardIndexRoute
+  '/topics/': typeof SiteTopicsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute;
-  '/dashboard': typeof DashboardRoute;
-  '/forgot-password': typeof ForgotPasswordRoute;
-  '/robots.txt': typeof RobotsDottxtRoute;
-  '/sign-in': typeof SignInRoute;
-  '/sign-up': typeof SignUpRoute;
-  '/sitemap.xml': typeof SitemapDotxmlRoute;
-  '/sign-in/otp': typeof SignInOtpRoute;
-  '/api/auth/$': typeof ApiAuthSplatRoute;
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/try': typeof TryRoute
+  '/welcome': typeof WelcomeRoute
+  '/@{$username}': typeof SiteAtChar123usernameChar125Route
+  '/about': typeof SiteAboutRoute
+  '/guidelines': typeof SiteGuidelinesRoute
+  '/privacy': typeof SitePrivacyRoute
+  '/search': typeof SiteSearchRoute
+  '/api/track': typeof ApiTrackRoute
+  '/media/$': typeof MediaSplatRoute
+  '/sign-in/otp': typeof SignInOtpRoute
+  '/': typeof SiteIndexRoute
+  '/dashboard/library': typeof SiteDashboardLibraryRoute
+  '/dashboard/notifications': typeof SiteDashboardNotificationsRoute
+  '/dashboard/reports': typeof SiteDashboardReportsRoute
+  '/dashboard/settings': typeof SiteDashboardSettingsRoute
+  '/dashboard/stats': typeof SiteDashboardStatsRoute
+  '/story/$slug': typeof SiteStorySlugRoute
+  '/topics/$slug': typeof SiteTopicsSlugRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/dashboard/write/$id': typeof DashboardWriteIdRoute
+  '/dashboard': typeof SiteDashboardIndexRoute
+  '/topics': typeof SiteTopicsIndexRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  '/': typeof IndexRoute;
-  '/dashboard': typeof DashboardRoute;
-  '/forgot-password': typeof ForgotPasswordRoute;
-  '/robots.txt': typeof RobotsDottxtRoute;
-  '/sign-in': typeof SignInRoute;
-  '/sign-up': typeof SignUpRoute;
-  '/sitemap.xml': typeof SitemapDotxmlRoute;
-  '/sign-in_/otp': typeof SignInOtpRoute;
-  '/api/auth/$': typeof ApiAuthSplatRoute;
+  __root__: typeof rootRouteImport
+  '/_site': typeof SiteRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/try': typeof TryRoute
+  '/welcome': typeof WelcomeRoute
+  '/_site/@{$username}': typeof SiteAtChar123usernameChar125Route
+  '/_site/about': typeof SiteAboutRoute
+  '/_site/dashboard': typeof SiteDashboardRouteWithChildren
+  '/_site/guidelines': typeof SiteGuidelinesRoute
+  '/_site/privacy': typeof SitePrivacyRoute
+  '/_site/search': typeof SiteSearchRoute
+  '/api/track': typeof ApiTrackRoute
+  '/media/$': typeof MediaSplatRoute
+  '/sign-in_/otp': typeof SignInOtpRoute
+  '/_site/': typeof SiteIndexRoute
+  '/_site/dashboard/library': typeof SiteDashboardLibraryRoute
+  '/_site/dashboard/notifications': typeof SiteDashboardNotificationsRoute
+  '/_site/dashboard/reports': typeof SiteDashboardReportsRoute
+  '/_site/dashboard/settings': typeof SiteDashboardSettingsRoute
+  '/_site/dashboard/stats': typeof SiteDashboardStatsRoute
+  '/_site/story/$slug': typeof SiteStorySlugRoute
+  '/_site/topics/$slug': typeof SiteTopicsSlugRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/dashboard_/write/$id': typeof DashboardWriteIdRoute
+  '/_site/dashboard/': typeof SiteDashboardIndexRoute
+  '/_site/topics/': typeof SiteTopicsIndexRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
     | '/forgot-password'
     | '/robots.txt'
     | '/sign-in'
     | '/sign-up'
     | '/sitemap.xml'
+    | '/try'
+    | '/welcome'
+    | '/@{$username}'
+    | '/about'
+    | '/dashboard'
+    | '/guidelines'
+    | '/privacy'
+    | '/search'
+    | '/api/track'
+    | '/media/$'
     | '/sign-in/otp'
-    | '/api/auth/$';
-  fileRoutesByTo: FileRoutesByTo;
+    | '/dashboard/library'
+    | '/dashboard/notifications'
+    | '/dashboard/reports'
+    | '/dashboard/settings'
+    | '/dashboard/stats'
+    | '/story/$slug'
+    | '/topics/$slug'
+    | '/api/auth/$'
+    | '/dashboard/write/$id'
+    | '/dashboard/'
+    | '/topics/'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/dashboard'
     | '/forgot-password'
     | '/robots.txt'
     | '/sign-in'
     | '/sign-up'
     | '/sitemap.xml'
+    | '/try'
+    | '/welcome'
+    | '/@{$username}'
+    | '/about'
+    | '/guidelines'
+    | '/privacy'
+    | '/search'
+    | '/api/track'
+    | '/media/$'
     | '/sign-in/otp'
-    | '/api/auth/$';
+    | '/'
+    | '/dashboard/library'
+    | '/dashboard/notifications'
+    | '/dashboard/reports'
+    | '/dashboard/settings'
+    | '/dashboard/stats'
+    | '/story/$slug'
+    | '/topics/$slug'
+    | '/api/auth/$'
+    | '/dashboard/write/$id'
+    | '/dashboard'
+    | '/topics'
   id:
     | '__root__'
-    | '/'
-    | '/dashboard'
+    | '/_site'
     | '/forgot-password'
     | '/robots.txt'
     | '/sign-in'
     | '/sign-up'
     | '/sitemap.xml'
+    | '/try'
+    | '/welcome'
+    | '/_site/@{$username}'
+    | '/_site/about'
+    | '/_site/dashboard'
+    | '/_site/guidelines'
+    | '/_site/privacy'
+    | '/_site/search'
+    | '/api/track'
+    | '/media/$'
     | '/sign-in_/otp'
-    | '/api/auth/$';
-  fileRoutesById: FileRoutesById;
+    | '/_site/'
+    | '/_site/dashboard/library'
+    | '/_site/dashboard/notifications'
+    | '/_site/dashboard/reports'
+    | '/_site/dashboard/settings'
+    | '/_site/dashboard/stats'
+    | '/_site/story/$slug'
+    | '/_site/topics/$slug'
+    | '/api/auth/$'
+    | '/dashboard_/write/$id'
+    | '/_site/dashboard/'
+    | '/_site/topics/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  DashboardRoute: typeof DashboardRoute;
-  ForgotPasswordRoute: typeof ForgotPasswordRoute;
-  RobotsDottxtRoute: typeof RobotsDottxtRoute;
-  SignInRoute: typeof SignInRoute;
-  SignUpRoute: typeof SignUpRoute;
-  SitemapDotxmlRoute: typeof SitemapDotxmlRoute;
-  SignInOtpRoute: typeof SignInOtpRoute;
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
+  SiteRoute: typeof SiteRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SignInRoute: typeof SignInRoute
+  SignUpRoute: typeof SignUpRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TryRoute: typeof TryRoute
+  WelcomeRoute: typeof WelcomeRoute
+  ApiTrackRoute: typeof ApiTrackRoute
+  MediaSplatRoute: typeof MediaSplatRoute
+  SignInOtpRoute: typeof SignInOtpRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  DashboardWriteIdRoute: typeof DashboardWriteIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/';
-      path: '/';
-      fullPath: '/';
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    '/dashboard': {
-      id: '/dashboard';
-      path: '/dashboard';
-      fullPath: '/dashboard';
-      preLoaderRoute: typeof DashboardRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/_site': {
+      id: '/_site'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof SiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/forgot-password': {
-      id: '/forgot-password';
-      path: '/forgot-password';
-      fullPath: '/forgot-password';
-      preLoaderRoute: typeof ForgotPasswordRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/robots.txt': {
-      id: '/robots.txt';
-      path: '/robots.txt';
-      fullPath: '/robots.txt';
-      preLoaderRoute: typeof RobotsDottxtRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-in': {
-      id: '/sign-in';
-      path: '/sign-in';
-      fullPath: '/sign-in';
-      preLoaderRoute: typeof SignInRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-up': {
-      id: '/sign-up';
-      path: '/sign-up';
-      fullPath: '/sign-up';
-      preLoaderRoute: typeof SignUpRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
-      id: '/sitemap.xml';
-      path: '/sitemap.xml';
-      fullPath: '/sitemap.xml';
-      preLoaderRoute: typeof SitemapDotxmlRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/try': {
+      id: '/try'
+      path: '/try'
+      fullPath: '/try'
+      preLoaderRoute: typeof TryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_site/': {
+      id: '/_site/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof SiteIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/@{$username}': {
+      id: '/_site/@{$username}'
+      path: '/@{$username}'
+      fullPath: '/@{$username}'
+      preLoaderRoute: typeof SiteAtChar123usernameChar125RouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/about': {
+      id: '/_site/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof SiteAboutRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/dashboard': {
+      id: '/_site/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof SiteDashboardRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/guidelines': {
+      id: '/_site/guidelines'
+      path: '/guidelines'
+      fullPath: '/guidelines'
+      preLoaderRoute: typeof SiteGuidelinesRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/privacy': {
+      id: '/_site/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof SitePrivacyRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/search': {
+      id: '/_site/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SiteSearchRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/api/track': {
+      id: '/api/track'
+      path: '/api/track'
+      fullPath: '/api/track'
+      preLoaderRoute: typeof ApiTrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/$': {
+      id: '/media/$'
+      path: '/media/$'
+      fullPath: '/media/$'
+      preLoaderRoute: typeof MediaSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-in_/otp': {
-      id: '/sign-in_/otp';
-      path: '/sign-in/otp';
-      fullPath: '/sign-in/otp';
-      preLoaderRoute: typeof SignInOtpRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/sign-in_/otp'
+      path: '/sign-in/otp'
+      fullPath: '/sign-in/otp'
+      preLoaderRoute: typeof SignInOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_site/dashboard/': {
+      id: '/_site/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof SiteDashboardIndexRouteImport
+      parentRoute: typeof SiteDashboardRoute
+    }
+    '/_site/dashboard/library': {
+      id: '/_site/dashboard/library'
+      path: '/library'
+      fullPath: '/dashboard/library'
+      preLoaderRoute: typeof SiteDashboardLibraryRouteImport
+      parentRoute: typeof SiteDashboardRoute
+    }
+    '/_site/dashboard/notifications': {
+      id: '/_site/dashboard/notifications'
+      path: '/notifications'
+      fullPath: '/dashboard/notifications'
+      preLoaderRoute: typeof SiteDashboardNotificationsRouteImport
+      parentRoute: typeof SiteDashboardRoute
+    }
+    '/_site/dashboard/reports': {
+      id: '/_site/dashboard/reports'
+      path: '/reports'
+      fullPath: '/dashboard/reports'
+      preLoaderRoute: typeof SiteDashboardReportsRouteImport
+      parentRoute: typeof SiteDashboardRoute
+    }
+    '/_site/dashboard/settings': {
+      id: '/_site/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof SiteDashboardSettingsRouteImport
+      parentRoute: typeof SiteDashboardRoute
+    }
+    '/_site/dashboard/stats': {
+      id: '/_site/dashboard/stats'
+      path: '/stats'
+      fullPath: '/dashboard/stats'
+      preLoaderRoute: typeof SiteDashboardStatsRouteImport
+      parentRoute: typeof SiteDashboardRoute
+    }
+    '/_site/story/$slug': {
+      id: '/_site/story/$slug'
+      path: '/story/$slug'
+      fullPath: '/story/$slug'
+      preLoaderRoute: typeof SiteStorySlugRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/topics/': {
+      id: '/_site/topics/'
+      path: '/topics'
+      fullPath: '/topics/'
+      preLoaderRoute: typeof SiteTopicsIndexRouteImport
+      parentRoute: typeof SiteRoute
+    }
+    '/_site/topics/$slug': {
+      id: '/_site/topics/$slug'
+      path: '/topics/$slug'
+      fullPath: '/topics/$slug'
+      preLoaderRoute: typeof SiteTopicsSlugRouteImport
+      parentRoute: typeof SiteRoute
+    }
     '/api/auth/$': {
-      id: '/api/auth/$';
-      path: '/api/auth/$';
-      fullPath: '/api/auth/$';
-      preLoaderRoute: typeof ApiAuthSplatRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard_/write/$id': {
+      id: '/dashboard_/write/$id'
+      path: '/dashboard/write/$id'
+      fullPath: '/dashboard/write/$id'
+      preLoaderRoute: typeof DashboardWriteIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface SiteDashboardRouteChildren {
+  SiteDashboardLibraryRoute: typeof SiteDashboardLibraryRoute
+  SiteDashboardNotificationsRoute: typeof SiteDashboardNotificationsRoute
+  SiteDashboardReportsRoute: typeof SiteDashboardReportsRoute
+  SiteDashboardSettingsRoute: typeof SiteDashboardSettingsRoute
+  SiteDashboardStatsRoute: typeof SiteDashboardStatsRoute
+  SiteDashboardIndexRoute: typeof SiteDashboardIndexRoute
+}
+
+const SiteDashboardRouteChildren: SiteDashboardRouteChildren = {
+  SiteDashboardLibraryRoute: SiteDashboardLibraryRoute,
+  SiteDashboardNotificationsRoute: SiteDashboardNotificationsRoute,
+  SiteDashboardReportsRoute: SiteDashboardReportsRoute,
+  SiteDashboardSettingsRoute: SiteDashboardSettingsRoute,
+  SiteDashboardStatsRoute: SiteDashboardStatsRoute,
+  SiteDashboardIndexRoute: SiteDashboardIndexRoute,
+}
+
+const SiteDashboardRouteWithChildren = SiteDashboardRoute._addFileChildren(
+  SiteDashboardRouteChildren,
+)
+
+interface SiteRouteChildren {
+  SiteAtChar123usernameChar125Route: typeof SiteAtChar123usernameChar125Route
+  SiteAboutRoute: typeof SiteAboutRoute
+  SiteDashboardRoute: typeof SiteDashboardRouteWithChildren
+  SiteGuidelinesRoute: typeof SiteGuidelinesRoute
+  SitePrivacyRoute: typeof SitePrivacyRoute
+  SiteSearchRoute: typeof SiteSearchRoute
+  SiteIndexRoute: typeof SiteIndexRoute
+  SiteStorySlugRoute: typeof SiteStorySlugRoute
+  SiteTopicsSlugRoute: typeof SiteTopicsSlugRoute
+  SiteTopicsIndexRoute: typeof SiteTopicsIndexRoute
+}
+
+const SiteRouteChildren: SiteRouteChildren = {
+  SiteAtChar123usernameChar125Route: SiteAtChar123usernameChar125Route,
+  SiteAboutRoute: SiteAboutRoute,
+  SiteDashboardRoute: SiteDashboardRouteWithChildren,
+  SiteGuidelinesRoute: SiteGuidelinesRoute,
+  SitePrivacyRoute: SitePrivacyRoute,
+  SiteSearchRoute: SiteSearchRoute,
+  SiteIndexRoute: SiteIndexRoute,
+  SiteStorySlugRoute: SiteStorySlugRoute,
+  SiteTopicsSlugRoute: SiteTopicsSlugRoute,
+  SiteTopicsIndexRoute: SiteTopicsIndexRoute,
+}
+
+const SiteRouteWithChildren = SiteRoute._addFileChildren(SiteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  SiteRoute: SiteRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TryRoute: TryRoute,
+  WelcomeRoute: WelcomeRoute,
+  ApiTrackRoute: ApiTrackRoute,
+  MediaSplatRoute: MediaSplatRoute,
   SignInOtpRoute: SignInOtpRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute
-};
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  DashboardWriteIdRoute: DashboardWriteIdRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from './router.tsx';
-import type { createStart } from '@tanstack/react-start';
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
 declare module '@tanstack/react-start' {
   interface Register {
-    ssr: true;
-    router: Awaited<ReturnType<typeof getRouter>>;
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
   }
 }

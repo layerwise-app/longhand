@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change the headway, watch the wait</title>
+<style>
+  :root { color-scheme: light dark; --ink:#1d1c1a; --muted:#68655e; --line:#e4e1d9; --accent:#2438a6; --bg:#fbfaf7; --bad:#b3261e }
+  @media (prefers-color-scheme: dark) { :root { --ink:#ecebe6; --muted:#a09e97; --line:#303238; --accent:#a3b3ff; --bg:#1b1c20; --bad:#f2867e } }
+  * { box-sizing: border-box }
+  body { margin:0; padding:18px; background:var(--bg); color:var(--ink); font:15px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif }
+  .row { display:flex; flex-wrap:wrap; gap:14px 28px; margin-bottom:14px }
+  .row label { flex:1 1 190px; color:var(--muted); font-size:13px; display:block }
+  .row b { color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums }
+  input[type=range] { width:100%; accent-color:var(--accent); height:28px; margin:6px 0 0 }
+  svg { display:block; width:100%; height:64px }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; border-top:1px solid var(--line); padding-top:12px }
+  .stat b { display:block; font-size:24px; font-weight:600; font-variant-numeric:tabular-nums }
+  .stat span { color:var(--muted); font-size:12px }
+</style>
+</head>
+<body>
+  <div class="row">
+    <label>Scheduled headway <b id="hv"></b>
+      <input id="h" type="range" min="5" max="60" step="1" value="12" aria-label="Minutes between buses">
+    </label>
+    <label>Bunching <b id="bv"></b>
+      <input id="b" type="range" min="0" max="100" step="5" value="0" aria-label="How bunched the buses are">
+    </label>
+  </div>
+  <svg id="line" viewBox="0 0 600 64" preserveAspectRatio="none" role="img" aria-label="Buses arriving over one hour"></svg>
+  <div class="stats" role="status">
+    <div class="stat"><b id="wait"></b><span>average wait if you just show up</span></div>
+    <div class="stat"><b id="buses"></b><span>buses an hour</span></div>
+    <div class="stat"><b id="year"></b><span>hours a year waiting, two trips a weekday</span></div>
+  </div>
+<script>
+  var h = document.getElementById('h'), b = document.getElementById('b'), svg = document.getElementById('line');
+  var NS = 'http://www.w3.org/2000/svg';
+  function shape(tag, attrs) { var el = document.createElementNS(NS, tag); for (var k in attrs) el.setAttribute(k, attrs[k]); svg.appendChild(el); }
+  function update() {
+    var headway = +h.value, bunch = +b.value / 100;
+    // Every second bus slides toward the one ahead of it as bunching grows.
+    var gaps = [headway * (1 - bunch * 0.9), headway * (1 + bunch * 0.9)];
+    // A rider arriving at a random moment waits half of whichever gap they land in,
+    // and they are more likely to land in the long one: E[g^2] / (2 E[g]).
+    var wait = (gaps[0] * gaps[0] + gaps[1] * gaps[1]) / (2 * (gaps[0] + gaps[1]));
+    var color = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+    var line = getComputedStyle(document.documentElement).getPropertyValue('--line');
+    var muted = getComputedStyle(document.documentElement).getPropertyValue('--muted');
+    svg.textContent = '';
+    shape('rect', { x: 0, y: 30, width: 600, height: 4, fill: line });
+    var minute = 0, i = 0;
+    while (minute < 60) {
+      shape('rect', { x: minute * 10 - 9, y: 20, width: 18, height: 24, rx: 4, fill: color });
+      minute += gaps[i++ % 2];
+    }
+    document.getElementById('hv').textContent = headway + ' minutes';
+    document.getElementById('bv').textContent = bunch === 0 ? 'none, perfectly even' : Math.round(bunch * 100) + '%';
+    document.getElementById('wait').textContent = wait.toFixed(1) + ' min';
+    document.getElementById('buses').textContent = (60 / headway).toFixed(headway % 60 ? 1 : 0);
+    document.getElementById('year').textContent = Math.round(wait * 2 * 260 / 60);
+  }
+  h.oninput = b.oninput = update;
+  update();
+</script>
+</body>
+</html>

@@ -1,16 +1,10 @@
 import { useState } from 'react';
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate, useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 import { ChevronDownIcon } from 'lucide-react';
 import { authClient } from '~/lib/auth-client';
 import { Button } from '~/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '~/components/ui/card';
+import { AuthShell } from '~/components/site/auth-shell';
 import {
   Collapsible,
   CollapsibleContent,
@@ -19,15 +13,25 @@ import {
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Separator } from '~/components/ui/separator';
+import { safeRedirect } from '~/lib/limits';
+import { useSessionRefresh } from '~/lib/use-session-refresh';
 import { seo } from '~/utils/seo';
 
+type SignInSearch = { redirect?: string };
+
 export const Route = createFileRoute('/sign-in')({
+  validateSearch: (search: Record<string, unknown>): SignInSearch => ({
+    redirect: typeof search.redirect === 'string' ? search.redirect : undefined
+  }),
   head: () => seo({ title: 'Sign in', noindex: true }),
   component: SignInPage
 });
 
 function SignInPage() {
+  const { redirect } = Route.useSearch();
   const navigate = useNavigate();
+  const router = useRouter();
+  const refresh = useSessionRefresh();
   const [passwordEmail, setPasswordEmail] = useState('');
   const [password, setPassword] = useState('');
   const [otpEmail, setOtpEmail] = useState('');
@@ -41,7 +45,7 @@ function SignInPage() {
       if (error) throw new Error(error.message ?? 'Failed to send code');
     },
     onSuccess: () =>
-      navigate({ to: '/sign-in/otp', search: { email: otpEmail } })
+      navigate({ to: '/sign-in/otp', search: { email: otpEmail, redirect } })
   });
 
   const signInWithPassword = useMutation({
@@ -52,19 +56,18 @@ function SignInPage() {
       });
       if (error) throw new Error(error.message ?? 'Failed to sign in');
     },
-    onSuccess: () => navigate({ to: '/dashboard' })
+    onSuccess: async () => {
+      await refresh();
+      router.history.push(safeRedirect(redirect, '/'));
+    }
   });
 
   return (
-    <div className='flex min-h-svh items-center justify-center p-4'>
-      <Card className='w-full max-w-sm'>
-        <CardHeader>
-          <CardTitle>Sign in</CardTitle>
-          <CardDescription>
-            Enter your email and we’ll send you a one-time sign-in code.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className='flex flex-col gap-6'>
+    <AuthShell
+      title='Welcome back'
+      description='Enter your email and we’ll send you a one-time sign-in code.'
+    >
+        <div className='flex flex-col gap-6'>
           <form
             className='flex flex-col gap-4'
             onSubmit={(event) => {
@@ -94,7 +97,7 @@ function SignInPage() {
                 {sendOtp.error.message}
               </p>
             ) : null}
-            <Button type='submit' disabled={sendOtp.isPending}>
+            <Button type='submit' size='lg' className='rounded-full' disabled={sendOtp.isPending}>
               {sendOtp.isPending ? 'Sending code…' : 'Continue with email'}
             </Button>
           </form>
@@ -159,7 +162,7 @@ function SignInPage() {
                     {signInWithPassword.error.message}
                   </p>
                 ) : null}
-                <Button type='submit' disabled={signInWithPassword.isPending}>
+                <Button type='submit' size='lg' className='rounded-full' disabled={signInWithPassword.isPending}>
                   {signInWithPassword.isPending
                     ? 'Signing in…'
                     : 'Sign in with password'}
@@ -169,12 +172,11 @@ function SignInPage() {
           </Collapsible>
           <p className='text-center text-sm text-muted-foreground'>
             Don’t have an account?{' '}
-            <Link to='/sign-up' className='underline'>
+            <Link to='/sign-up' search={{ redirect }} className='underline underline-offset-2'>
               Sign up
             </Link>
           </p>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+    </AuthShell>
   );
 }
