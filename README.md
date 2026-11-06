@@ -1,32 +1,53 @@
+<a href="https://layerwise.app"><picture><source media="(prefers-color-scheme: dark)" srcset="https://layerwise.app/powered-by-dark.png"><img src="https://layerwise.app/powered-by.png" alt="Powered by Layerwise" width="174" height="28"></picture></a>
+
 # Longhand
 
-<a href="https://layerwise.app"><img src="https://layerwise.app/powered-by.png" alt="Powered by Layerwise" width="320" /></a>
+Longhand is a calm, reading-first publishing platform for essays, field notes,
+and short fiction. It suits anyone who wants to run a home for long-form
+writing, such as a writing community, a small magazine, or a team's essays,
+without ads, streaks, or an endless scroll.
 
-Longhand is a calm publishing platform: anyone can write stories, and readers
-can follow writers and topics. It's a complete product you can make your own in
-minutes. It ships with 24 original stories by 8 fictional writers, so the site
-is full the first time it loads.
+Visitors can read every story without an account, browse topics and writers,
+and search the whole site. With an account they can write and publish in a
+write-in-place editor, follow writers and topics, clap, respond, highlight
+passages, and keep a reading list. It ships with 24 original stories by 8
+fictional writers, so the site is full the first time it loads. See the live
+demo at [longhand.layerwise.site](https://longhand.layerwise.site/).
 
-Built with TanStack Start, React, Tailwind CSS, and shadcn/ui, on Cloudflare
+Longhand was built with [Layerwise](https://layerwise.app), and you can open it
+in Layerwise to make your own version.
+
+It runs on TanStack Start, React, Tailwind CSS, and shadcn/ui, on Cloudflare
 Workers with Layerwise Database, Authentication, Storage, and Email.
 
 ## Make it your own
 
-**Edit [`src/brand.config.ts`](src/brand.config.ts).** The product name, tagline,
-home page copy, colors for both themes, fonts, and topics all live in that one
-file, and the rest of the app reads from it. Comments in the file explain how to
-swap a font.
+**Start with [`src/brand.config.ts`](src/brand.config.ts).** The product name,
+tagline, description, home page hero, footer note, colors for both themes, fonts,
+and topics all live in that one file, and the rest of the app reads from it.
+Comments in the file explain how to swap a font.
 
-A few other things you'll probably want to change:
+**Add a topic** by adding an entry to `topics` in `src/brand.config.ts` with a
+`slug`, `name`, and `description`. Keep slugs stable once stories use them; names
+and descriptions can change any time.
 
+Other things you'll probably want to change:
+
+- **Page copy:** the About, Guidelines, and Privacy pages are in
+  `src/routes/_site/about.tsx`, `guidelines.tsx`, and `privacy.tsx`. The text of
+  new follower and new response emails is in `src/server/mailer.ts`.
+- **Footer:** `src/components/site/footer.tsx` holds the footer links and the
+  Powered by Layerwise badge.
 - **Logo and favicons:** `src/components/site/logo.tsx` holds the mark, and
   `pnpm art` redraws the favicons and share image from `scripts/art/generate.mjs`.
-- **Seed content:** the stories are Markdown files in `scripts/seed/stories/`. To
-  change them for a project that hasn't been published, edit the files and run
-  `pnpm seed:build`. See [Seed data](#seed-data) before you do this on a live site.
-- **Limits:** upload size, topic count, and field lengths are in `src/lib/limits.ts`.
-  Rate limits are in `src/server/rate-limit.ts`.
+- **Seed content:** the stories are Markdown files in `scripts/seed/stories/`. See
+  [Seed data](#seed-data) for how to add one, and read it before you change seed
+  content on a live site.
+- **Limits:** upload size, topics per story, claps per reader, and field lengths are
+  in `src/lib/limits.ts`. Rate limits are in `src/server/rate-limit.ts`.
 - **Feed ranking:** the scoring is in `src/lib/feed-rank.ts`, with tests beside it.
+- **Search and sharing:** the site name, description, and share image come from
+  `src/lib/site.ts`. When you connect a custom domain, set `site.url` there.
 
 ## What's inside
 
@@ -78,20 +99,21 @@ used by your stories and profiles are shown.
 ## Commands
 
 ```bash
-pnpm dev                                  # Local development
+pnpm dev                                  # Local development (Layerwise runs this for you)
 pnpm check-types                          # Type check
 pnpm test                                 # Unit tests
-pnpm build                                # Production build
+pnpm build                                # Type check and production build
 pnpm db:generate --name <migration_name>  # Generate a migration after a schema change
 pnpm db:migrate                           # Apply migrations to the local database
 pnpm seed:build                           # Rebuild the seed migration from scripts/seed/
-pnpm art                                  # Redraw covers, figures, avatars, and icons
-pnpm cf-typegen
-pnpm release
+pnpm art                                  # Redraw covers, figures, avatars, share image, and icons
+pnpm cf-typegen                           # Regenerate Worker binding types after changing wrangler.jsonc
 ```
 
-`pnpm art` needs a local Chromium from Playwright. It isn't part of the build, and
-its output is committed to `public/art/`.
+`pnpm art` renders in a headless Chromium through `playwright-core`. It uses
+Playwright's Chromium by default; set `CHROME_PATH` or pass `--exe` to use another
+browser, and `--only <name>` to redraw one piece. It isn't part of the build, and
+its output is committed to `public/`.
 
 ## Seed data
 
@@ -100,8 +122,18 @@ The stories, people, claps, responses, and stats are inserted by one migration,
 rows, and dates are relative to when the migration runs. Seed accounts have no
 password and never receive email.
 
-`pnpm seed:build` rewrites that migration in place, which is safe only until it has
-run in production. After you've published, change content through the app, or
+**To add a seed story,** create `scripts/seed/stories/<slug>.md`. The file name is
+the story's URL slug. Its front matter needs `title`, `subtitle`, `description`,
+`author` (one of the writers defined at the top of `scripts/seed/build.mjs`),
+`topics` (comma-separated topic slugs), `cover_alt`, `days_ago`, and
+`top_highlight`, which must appear word for word in the story. Responses go after
+a `===responses===` line, one `@writer: text` per line, indented for a reply. The cover is read from
+`public/art/covers/<slug>.jpg`, with a `<slug>-sm.webp` thumbnail beside it: add a
+drawing to `covers` in `scripts/art/generate.mjs` and run `pnpm art --only <slug>`,
+or add both files yourself. Then run `pnpm seed:build`.
+
+`pnpm seed:build` rewrites the seed migration in place, which is safe only until it
+has run in production. After you've published, change content through the app, or
 generate a new migration with `pnpm db:generate --custom --name <name>`.
 
 ## Important files
@@ -110,6 +142,7 @@ generate a new migration with `pnpm db:generate --custom --name <name>`.
 - `src/routes/`: pages and server routes
 - `src/functions/`: server functions, each with its own auth check
 - `src/server/`: rate limits, the mailer, and shared server code
+- `src/components/site/`: header, footer, logo, and sign-in layout
 - `src/components/story/`: the reader and everything on the story page
 - `src/components/editor/`: the editor, loaded only when someone writes
 - `src/lib/story-doc.ts`: the document sanitizer and HTML renderer
@@ -121,8 +154,7 @@ generate a new migration with `pnpm db:generate --custom --name <name>`.
 Every public page sets its title, description, and canonical URL with `seo()`. Stories
 add Article structured data and use their cover as the share image. `/sitemap.xml`
 lists published stories, authors, and topics. The editor, drafts, stats, and sign-in
-pages are kept out of search. When you connect a custom domain, set `site.url` in
-`src/lib/site.ts`.
+pages are kept out of search.
 
 The Worker stays small: there is no image renderer in it, and the editor only ships
 to the browser when someone opens it.
